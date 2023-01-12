@@ -128,12 +128,32 @@ const App = () => {
     fontSize: "1.5em",
   };
 
+  const AddButtonStyle = {
+    marginTop: "1rem",
+    marginBottom: "2rem",
+    width: "50%",
+  };
+
+  const updateClickStyle = {
+    width: "50%",
+    margin: "0 auto",
+  };
+
+  const handleEditStyle = {
+    marginTop: "1.5rem",
+  };
+
+  const deleteStyle = {
+    marginTop: "1.5rem",
+    marginBottom: "2rem",
+  };
+
   return (
     <div
-      className="w-screen h-screen dark:bg-gray-600 bg-white flex flex-col overflow-auto "
+      className="w-full h-screen dark:bg-gray-600 bg-white flex flex-col overflow-auto"
       style={mainContainer}
     >
-      <div className="w-full h-screen dark:bg-gray-600 grid-rows-12 gap-3 p-3">
+      <div className="w-full h-screen h-full w-full overflow-auto p-2">
         <div>
           <input
             type="text"
@@ -160,11 +180,7 @@ const App = () => {
           label="Add Task"
           onClick={() => handleAddTask()}
           disabled={inputTask === ""}
-          style={{
-            marginTop: "1rem",
-            marginBottom: "2rem",
-            width: "50%",
-          }}
+          style={AddButtonStyle}
         />
         {todos
           .filter((todo) => todo.content.includes(searchValue))
@@ -194,7 +210,7 @@ const App = () => {
                     />
                     <button
                       onClick={() => handleUpdateClick(todo.id)}
-                      style={{ width: "50%", margin: "0 auto" }}
+                      style={updateClickStyle}
                     >
                       Update
                     </button>
@@ -205,7 +221,7 @@ const App = () => {
                       label="Edit"
                       onClick={() => handleEdit(todo)}
                       className="btn-task"
-                      style={{ marginTop: "1.5rem" }}
+                      style={handleEditStyle}
                     />
                   </>
                 )}
@@ -214,7 +230,7 @@ const App = () => {
                   label="Hapus"
                   onClick={() => handleDeleteTask(todo.id)}
                   className="btn-task"
-                  style={{ marginTop: "1.5rem", marginBottom: "2rem" }}
+                  style={deleteStyle}
                 />
               </div>
             </div>
