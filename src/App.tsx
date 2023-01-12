@@ -24,7 +24,7 @@ const App = () => {
         { content: inputTask },
         {
           headers: {
-            Authorization: "Bearer  66f231284e2f35455638f93fb4d984b8207cbb01",
+            Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
           },
         }
       );
@@ -49,15 +49,16 @@ const App = () => {
     try {
       await axios.delete(`https://api.todoist.com/rest/v2/tasks/${id}`, {
         headers: {
-          Authorization: "Bearer  66f231284e2f35455638f93fb4d984b8207cbb01",
+          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
         },
       });
-      alert("data task dihapus");
-      setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
-      localStorage.setItem(
-        "todos",
-        JSON.stringify(todos.filter((item) => item.id !== id))
-      );
+      if (window.confirm("Are You Sure want to delete this task?")) {
+        setTodos((prevTodos) => prevTodos.filter((item) => item.id !== id));
+        localStorage.setItem(
+          "todos",
+          JSON.stringify(todos.filter((item) => item.id !== id))
+        );
+      }
     } catch (error) {
       console.error(error);
     }
@@ -70,7 +71,7 @@ const App = () => {
           "https://api.todoist.com/rest/v2/tasks",
           {
             headers: {
-              Authorization: "Bearer  66f231284e2f35455638f93fb4d984b8207cbb01",
+              Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
             },
           }
         );
@@ -82,6 +83,7 @@ const App = () => {
     fetchData();
   }, []);
 
+  //function to handle completed task
   function handleCompleteTask(todo: TodoType) {
     const newTodos = [...todos];
     const index = newTodos.findIndex((item) => item.id === todo.id);
@@ -90,15 +92,18 @@ const App = () => {
     setTodos(newTodos);
   }
 
+  //function to handle search query
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
+  //function to handle edit
   const handleEdit = (todo: TodoType) => {
     setEditField(todo);
     setInputTask(todo.content);
   };
 
+  //function to handle update after click edit
   const handleUpdateClick = (id: number) => {
     const updatedTodos = todos.map((item) => {
       if (item.id === id) {
